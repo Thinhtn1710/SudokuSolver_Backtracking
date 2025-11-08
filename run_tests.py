@@ -1,4 +1,4 @@
-﻿import os
+import os
 import time
 from sudoku_solver import solve_sudoku
 from sudoku_utils import read_board_from_file, write_board_to_file
@@ -9,7 +9,7 @@ output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 
 # Puzzle bình thường
-puzzles = [f"puzzle{i}.txt" for i in range(2, 7)]
+puzzles = [f"puzzle{i}.txt" for i in range(1, 7)]
 # Puzzle lỗi
 error_puzzles = [
     "puzzle_error_missing_line.txt",
@@ -76,4 +76,3 @@ with open("report_testcase.md", "w", encoding="utf-8") as f:
     f.write("\n".join(report_lines))
 
 print("Đã tạo report_testcase.md")
-
