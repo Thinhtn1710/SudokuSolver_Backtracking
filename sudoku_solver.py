@@ -1,5 +1,3 @@
-# sudoku_solver.py
-
 import os
 import sys
 import time
@@ -17,13 +15,7 @@ from sudoku_utils import (
 def solve_sudoku(board: Board) -> bool:
     """
     Thuật toán giải Sudoku bằng quay lui (Backtracking).
-    - Tìm ô trống.
-    - Thử lần lượt các số 1..9, kiểm tra hợp lệ bằng is_valid.
-    - Nếu hợp lệ thì đặt số đó và đệ quy giải tiếp.
-    - Nếu nhánh đó không dẫn đến nghiệm -> backtrack (gán lại 0) và thử số khác.
-    - Nếu không còn ô trống -> đã giải xong -> trả về True.
     """
-
     empty_pos = find_empty(board)
     if empty_pos is None:
         # Không còn ô trống => đã giải xong
@@ -33,12 +25,12 @@ def solve_sudoku(board: Board) -> bool:
 
     for num in range(1, 10):
         if is_valid(board, row, col, num):
-            board[row][col] = num  # đặt thử
+            board[row][col] = num  
 
             if solve_sudoku(board):
-                return True  # nếu giải được thì propagate True lên
+                return True 
 
-            # nếu không giải được, quay lui
+           
             board[row][col] = 0
 
     # Thử hết 1..9 không được => không có nghiệm tại trạng thái này
@@ -47,14 +39,17 @@ def solve_sudoku(board: Board) -> bool:
 
 def solve_file(input_path: str, output_path: str) -> None:
     """
-    Hàm tiện ích:
-    - Đọc Sudoku từ input_path
-    - In đề
-    - Giải + đo thời gian
-    - In kết quả
-    - Ghi lời giải ra output_path
+    - Đọc Sudoku từ input_path (kèm kiểm tra lỗi đầu vào).
+    - In đề.
+    - Giải + đo thời gian.
+    - Ghi kết quả ra output_path nếu giải được.
     """
-    board = read_board_from_file(input_path)
+    try:
+        board = read_board_from_file(input_path)
+    except ValueError as e:
+        # Trường hợp 3 file lỗi sẽ rơi vào đây
+        print("Lỗi dữ liệu đầu vào:", e)
+        return
 
     print("===== SUDOKU BAN ĐẦU =====")
     print_board(board)
